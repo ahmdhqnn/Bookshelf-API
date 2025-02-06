@@ -69,14 +69,14 @@ const getAllBooks = (request, h) => {
   }
 
   if (reading !== undefined) {
-    filteredBooks = filteredBooks.filter(
-      (book) => book.reading === (reading === "1")
-    );
+    const isReading = reading === "1";
+    filteredBooks = filteredBooks.filter((book) => book.reading === isReading);
   }
 
   if (finished !== undefined) {
+    const isFinished = finished === "1";
     filteredBooks = filteredBooks.filter(
-      (book) => book.finished === (finished === "1")
+      (book) => book.finished === isFinished
     );
   }
 
