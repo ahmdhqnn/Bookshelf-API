@@ -1,20 +1,28 @@
 const Hapi = require("@hapi/hapi");
-const routes = require(".routes/booksRoutes");
+const routes = require("./routes/booksRoutes");
+
+const port = process.env.PORT || 9000;
+const host = process.env.HOST || "localhost";
 
 const init = async () => {
   const server = Hapi.server({
-    port: 9000,
-    host: "localhost",
+    port,
+    host,
+    routes: {
+      cors: {
+        origin: ["*"],
+      },
+    },
   });
 
   server.route(routes);
 
   await server.start();
-  console.log("Server Running on ${server.info.uri}");
+  console.log(`Server Running on ${server.info.uri}`);
 };
 
 process.on("unhandledRejection", (err) => {
-  console.log(err);
+  console.error("UnhandledRejection:", err);
   process.exit(1);
 });
 
